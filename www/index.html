@@ -26,8 +26,8 @@
                 padding: 2px;
                 border-radius: 5px;
                 position: relative;
-                width: 308px;
-                height: 308px;
+                width: 300px;
+                height: 300px;
             }
             .puzzle-piece {
                 width: 75px;
@@ -87,16 +87,16 @@
     <body>
         <div id="game-container">
             <div id="puzzle-container"></div>
-            <div id="moves">Ходы: 0</div>
+            <div id="moves">Moves: 0</div>
         </div>
         <div id="start-menu">
-            <h1>Пазл-головоломка</h1>
-            <button id="start-button">Начать игру</button>
+            <h1>Image Puzzle Game</h1>
+            <button id="start-button">Start Game</button>
         </div>
         <div id="win-dialog">
-            <h2>Поздравляем!</h2>
+            <h2>Congratulations!</h2>
             <p id="win-message"></p>
-            <button id="play-again-button">Играть снова</button>
+            <button id="play-again-button">Play Again</button>
         </div>
         <canvas id="confetti"></canvas>
 
@@ -155,8 +155,8 @@
                     const col = i % size;
                     piece.style.backgroundImage = `url(${currentImageUrl})`;
                     piece.style.backgroundPosition = `${-col * 75}px ${-row * 75}px`;
-                    piece.style.left = `${col * 77}px`;
-                    piece.style.top = `${row * 77}px`;
+                    piece.style.left = `${col * 76}px`;
+                    piece.style.top = `${row * 76}px`;
                     piece.dataset.row = row;
                     piece.dataset.col = col;
                     pieces.push(piece);
@@ -166,8 +166,8 @@
                         e.preventDefault();
                         const rect = puzzleContainer.getBoundingClientRect();
                         const touch = e.touches[0];
-                        const row = Math.floor((touch.clientY - rect.top) / 77);
-                        const col = Math.floor((touch.clientX - rect.left) / 77);
+                        const row = Math.floor((touch.clientY - rect.top) / 76);
+                        const col = Math.floor((touch.clientX - rect.left) / 76);
                         movePiece(row, col);
                     });
                 }
@@ -197,8 +197,8 @@
                         (p) => parseInt(p.dataset.row) === row && parseInt(p.dataset.col) === col
                     );
 
-                    clickedPiece.style.left = `${emptyCell.col * 77}px`;
-                    clickedPiece.style.top = `${emptyCell.row * 77}px`;
+                    clickedPiece.style.left = `${emptyCell.col * 76}px`;
+                    clickedPiece.style.top = `${emptyCell.row * 76}px`;
                     clickedPiece.dataset.row = emptyCell.row;
                     clickedPiece.dataset.col = emptyCell.col;
 
@@ -206,7 +206,7 @@
 
                     if (countMove) {
                         moves++;
-                        movesDisplay.textContent = `Ходы: ${moves}`;
+                        movesDisplay.textContent = `Moves: ${moves}`;
                         checkWin();
                     }
                 }
@@ -231,7 +231,7 @@
             }
 
             function showWinDialog() {
-                winMessage.textContent = `Вы решили головоломку за ${moves} ходов!`;
+                winMessage.textContent = `You solved the puzzle in ${moves} moves!`;
                 winDialog.style.display = "flex";
                 playVictorySound();
                 startConfetti();
@@ -242,7 +242,7 @@
                 audio.play();
             }
 
-            let animationId; // New variable to store the animation frame ID
+            let animationId;
 
             function startConfetti() {
                 confettiCanvas.width = window.innerWidth;
