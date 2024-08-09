@@ -242,6 +242,8 @@
                 audio.play();
             }
 
+            let animationId; // New variable to store the animation frame ID
+
             function startConfetti() {
                 confettiCanvas.width = window.innerWidth;
                 confettiCanvas.height = window.innerHeight;
@@ -275,7 +277,7 @@
                     }
 
                     update();
-                    requestAnimationFrame(draw);
+                    animationId = requestAnimationFrame(draw); // Store the animation frame ID
                 }
 
                 function update() {
@@ -304,7 +306,16 @@
                 draw();
             }
 
+            // New function to stop the confetti animation
+            function stopConfetti() {
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                    ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+                }
+            }
+
             function startNewGame() {
+                stopConfetti(); // Stop the confetti animation
                 moves = 0;
                 movesDisplay.textContent = "Ходы: 0";
                 createPuzzle();
