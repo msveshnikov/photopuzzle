@@ -277,7 +277,7 @@
                     }
 
                     update();
-                    animationId = requestAnimationFrame(draw); // Store the animation frame ID
+                    animationId = requestAnimationFrame(draw);
                 }
 
                 function update() {
@@ -306,7 +306,6 @@
                 draw();
             }
 
-            // New function to stop the confetti animation
             function stopConfetti() {
                 if (animationId) {
                     cancelAnimationFrame(animationId);
@@ -315,9 +314,9 @@
             }
 
             function startNewGame() {
-                stopConfetti(); // Stop the confetti animation
+                stopConfetti();
                 moves = 0;
-                movesDisplay.textContent = "Ходы: 0";
+                movesDisplay.textContent = "Moves: 0";
                 createPuzzle();
                 shufflePuzzle();
                 startMenu.style.display = "none";
