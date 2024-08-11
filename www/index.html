@@ -52,7 +52,8 @@
                 z-index: 10;
             }
             #start-button,
-            #play-again-button {
+            #play-again-button,
+            #upload-button {
                 font-size: 1.5em;
                 padding: 10px 20px;
                 background-color: #4caf50;
@@ -60,6 +61,7 @@
                 border: none;
                 border-radius: 5px;
                 cursor: pointer;
+                margin: 10px;
             }
             #moves {
                 margin-top: 10px;
@@ -82,6 +84,9 @@
                 height: 100%;
                 pointer-events: none;
             }
+            #file-input {
+                display: none;
+            }
         </style>
     </head>
     <body>
@@ -92,6 +97,8 @@
         <div id="start-menu">
             <h1>Image Puzzle Game</h1>
             <button id="start-button">Start Game</button>
+            <input type="file" id="file-input" accept="image/*" />
+            <button id="upload-button">Upload Your Photo</button>
         </div>
         <div id="win-dialog">
             <h2>Congratulations!</h2>
@@ -110,6 +117,8 @@
             const playAgainButton = document.getElementById("play-again-button");
             const confettiCanvas = document.getElementById("confetti");
             const ctx = confettiCanvas.getContext("2d");
+            const fileInput = document.getElementById("file-input");
+            const uploadButton = document.getElementById("upload-button");
 
             let moves = 0;
             let pieces = [];
@@ -148,6 +157,19 @@
                 "https://images.unsplash.com/photo-1722929220740-f42b8c0ca019?auto=format&fit=crop&w=600&h=600&q=95",
                 "https://images.unsplash.com/photo-1722809431347-24e20c2c9981?auto=format&fit=crop&w=600&h=600&q=95",
                 "https://images.unsplash.com/photo-1721742145371-c40a99b36995?auto=format&fit=crop&w=600&h=600&q=95",
+                "https://images.unsplash.com/photo-1722322670425-a5911a928b78?auto=format&fit=crop&w=600&h=600&q=95",
+                "https://images.unsplash.com/photo-1722194006363-acdce533e409?auto=format&fit=crop&w=600&h=600&q=95",
+                "https://images.unsplash.com/photo-1722196322758-53036b377aaa?auto=format&fit=crop&w=600&h=600&q=95",
+                "https://images.unsplash.com/photo-1722159375321-048d8556dd94?auto=format&fit=crop&w=600&h=600&q=95",
+                "https://images.unsplash.com/photo-1722233987129-61dc344db8b6?auto=format&fit=crop&w=600&h=600&q=95",
+                "https://images.unsplash.com/photo-1722194006398-f9e0c1f8311c?auto=format&fit=crop&w=600&h=600&q=95",
+                "https://images.unsplash.com/photo-1722695452219-3be4de0c5891?auto=format&fit=crop&w=600&h=600&q=95",
+                "https://images.unsplash.com/photo-1722811888264-6d502c5616dd?auto=format&fit=crop&w=600&h=600&q=95",
+                "https://images.unsplash.com/photo-1542936221-b02434e3d36e?auto=format&fit=crop&w=600&h=600&q=95",
+                "https://images.unsplash.com/photo-1554224212-3d13a4e17935?auto=format&fit=crop&w=600&h=600&q=95",
+                "https://images.unsplash.com/photo-1698495462275-acd6e5ca2e66?auto=format&fit=crop&w=600&h=600&q=95",
+                "https://images.unsplash.com/photo-1585974780732-05acf9f01c32?auto=format&fit=crop&w=600&h=600&q=95",
+                "https://images.unsplash.com/photo-1527942364978-2b826fc00de6?auto=format&fit=crop&w=600&h=600&q=95",
             ];
 
             let currentImageUrl;
@@ -155,7 +177,9 @@
             function createPuzzle() {
                 puzzleContainer.innerHTML = "";
                 pieces = [];
-                currentImageUrl = images[Math.floor(Math.random() * images.length)];
+                if (!currentImageUrl) {
+                    currentImageUrl = images[Math.floor(Math.random() * images.length)];
+                }
                 for (let i = 0; i < size * size - 1; i++) {
                     const piece = document.createElement("div");
                     piece.classList.add("puzzle-piece");
@@ -333,12 +357,31 @@
 
             startButton.addEventListener("touchstart", (e) => {
                 e.preventDefault();
+                currentImageUrl = null; // Reset to use a random image
                 startNewGame();
             });
 
             playAgainButton.addEventListener("touchstart", (e) => {
                 e.preventDefault();
+                currentImageUrl = null; // Reset to use a random image
                 startNewGame();
+            });
+
+            uploadButton.addEventListener("touchstart", (e) => {
+                e.preventDefault();
+                fileInput.click();
+            });
+
+            fileInput.addEventListener("change", (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        currentImageUrl = event.target.result;
+                        startNewGame();
+                    };
+                    reader.readAsDataURL(file);
+                }
             });
 
             window.addEventListener("resize", () => {
@@ -348,10 +391,6 @@
 
             createPuzzle();
             shufflePuzzle();
-
-            // const bgMusic = new Audio("https://mangatv.shop/api/music/mystic-paths.mp3");
-            // bgMusic.loop = true;
-            // bgMusic.play();
         </script>
     </body>
 </html>
