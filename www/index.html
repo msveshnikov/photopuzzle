@@ -192,7 +192,6 @@
                 "https://images.unsplash.com/photo-1698138819865-88d3add4838f",
                 "https://images.unsplash.com/photo-1720037574608-d3acb83d5353",
                 "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f",
-
             ];
 
             let currentImageUrl;
@@ -231,7 +230,7 @@
 
             function shufflePuzzle() {
                 emptyCell = { row: size - 1, col: size - 1 };
-                for (let i = 0; i < 1000; i++) {
+                for (let i = 0; i < 100; i++) {
                     const possibleMoves = getPossibleMoves();
                     const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
                     movePiece(randomMove.row, randomMove.col, false);
@@ -373,8 +372,8 @@
                 stopConfetti();
                 moves = 0;
                 movesDisplay.textContent = "Moves: 0";
-                createPuzzle();
-                shufflePuzzle();
+                // createPuzzle();
+                // shufflePuzzle();
                 startMenu.style.display = "none";
                 winDialog.style.display = "none";
             }
@@ -402,6 +401,8 @@
                     const reader = new FileReader();
                     reader.onload = function (event) {
                         currentImageUrl = event.target.result;
+                        createPuzzle();
+                        shufflePuzzle();
                         startNewGame();
                     };
                     reader.readAsDataURL(file);
