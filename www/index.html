@@ -44,7 +44,8 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background-color: rgba(0, 0, 0, 0.8);
+                color: white;
+                background-color: rgba(0, 0, 0, 0.5);
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -71,6 +72,7 @@
                 display: none;
                 color: white;
                 text-align: center;
+                background-color: rgba(0, 0, 0, 0.2);
             }
             #win-dialog h2 {
                 font-size: 2.5em;
@@ -98,7 +100,7 @@
             <h1>Image Puzzle Game</h1>
             <button id="start-button">Start Game</button>
             <input type="file" id="file-input" accept="image/*" />
-            <button id="upload-button">Upload Your Photo</button>
+            <button id="upload-button">Select Your Photo</button>
         </div>
         <div id="win-dialog">
             <h2>Congratulations!</h2>
@@ -357,13 +359,13 @@
 
             startButton.addEventListener("touchstart", (e) => {
                 e.preventDefault();
-                currentImageUrl = null; // Reset to use a random image
+                currentImageUrl = null; 
                 startNewGame();
             });
 
             playAgainButton.addEventListener("touchstart", (e) => {
                 e.preventDefault();
-                currentImageUrl = null; // Reset to use a random image
+                currentImageUrl = null; 
                 startNewGame();
             });
 
