@@ -230,7 +230,7 @@
 
             function shufflePuzzle() {
                 emptyCell = { row: size - 1, col: size - 1 };
-                for (let i = 0; i < 100; i++) {
+                for (let i = 0; i < 300; i++) {
                     const possibleMoves = getPossibleMoves();
                     const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
                     movePiece(randomMove.row, randomMove.col, false);
@@ -387,6 +387,8 @@
             playAgainButton.addEventListener("touchstart", (e) => {
                 e.preventDefault();
                 currentImageUrl = null;
+                createPuzzle();
+                shufflePuzzle();
                 startNewGame();
             });
 
